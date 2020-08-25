@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
 const UserSchema = new Schema({
   username: {
@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     required: true,
     type: String,
   },
-  votes: [String],
+  votes: [SchemaTypes.ObjectId],
 });
 
 module.exports = model("User", UserSchema);

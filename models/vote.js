@@ -1,15 +1,20 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
-const VoterSchema = new Schema({
-  username: {
-    required: true,
-    type: String,
+const VoterSchema = new Schema(
+  {
+    username: {
+      required: true,
+      type: String,
+    },
+    id: {
+      required: true,
+      type: SchemaTypes.ObjectId,
+    },
   },
-  id: {
-    required: true,
-    type: String,
-  },
-});
+  {
+    _id: false,
+  }
+);
 
 const VoteSchema = new Schema({
   title: {
@@ -17,8 +22,8 @@ const VoteSchema = new Schema({
     type: String,
   },
   author: {
+    type: VoterSchema,
     required: true,
-    type: String,
   },
   voters: [VoterSchema],
 });
