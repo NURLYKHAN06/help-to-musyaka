@@ -1,0 +1,33 @@
+{
+  "name": "help-to-musyaka",
+  "version": "1.0.0",
+  "description": "help to musyaka to choose language",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NURLYKHAN06/help-to-musyaka.git"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "author": "n.salamatoff@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NURLYKHAN06/help-to-musyaka/issues"
+  },
+  "homepage": "https://github.com/NURLYKHAN06/help-to-musyaka#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
