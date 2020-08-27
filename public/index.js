@@ -20,6 +20,12 @@ const App = {
         signup: false,
         addVote: false,
       },
+      loader: false,
+      alert: {
+        type: null,
+        message: "",
+      },
+      timeout: null,
     };
   },
   methods: {
@@ -28,9 +34,12 @@ const App = {
       ev.preventDefault();
       const { username, password } = this.$data.inputValues;
       if (!username.trim().length && !password.trim().length) return;
+      this.setLoader(true);
       const response = await postRequest(API_SIGNIN, { username, password });
       if (response.error) {
+        console.log(4);
         this.showAlert("error", response.error);
+        this.setLoader(false);
         return;
       }
       saved.value = {
@@ -42,6 +51,7 @@ const App = {
       this.$data.inputValues.username = "";
       this.$data.inputValues.password = "";
       this.changeModal("signin", false);
+      this.setLoader(false);
     },
     signout: function () {
       this.$data.user = null;
@@ -51,43 +61,53 @@ const App = {
       ev.preventDefault();
       const { username, password } = this.$data.inputValues;
       if (!username.trim().length && !password.trim().length) return;
+      this.setLoader(true);
       const response = await postRequest(API_SIGNUP, { username, password });
       if (response.error) {
         this.showAlert("error", response.error);
+        this.setLoader(false);
         return;
       }
       this.$data.inputValues.username = "";
       this.$data.inputValues.password = "";
       this.changeModal("signup", false);
       this.showAlert("success", "Пользователь успешно создано");
+      this.setLoader(false);
     },
     // vote methods
     getVotes: async function () {
+      this.setLoader(true);
       const response = await getRequest(API_GET_VOTES);
       if (response.error) {
         this.showAlert("error", response.error);
+        this.setLoader(false);
         return;
       }
       this.$data.votes = response.data.votes;
+      this.setLoader(false);
     },
     addVote: async function (ev) {
       ev.preventDefault();
       const { voteTitle } = this.$data.inputValues;
       if (!voteTitle.trim().length) return;
+      this.setLoader(true);
       const response = await postRequest(API_ADD_VOTE, {
         title: voteTitle,
         authorId: this.$data.user.id,
       });
       if (response.error) {
         this.showAlert("error", response.error);
+        this.setLoader(false);
         return;
       }
       this.$data.inputValues.voteTitle = "";
       this.changeModal("addVote", false);
       this.getVotes();
       this.showAlert("success", "Успешно добавлено.");
+      this.setLoader(false);
     },
     toVote: async function (voteId) {
+      this.setLoader(true);
       const response = await postRequest(API_TO_VOTE, {
         id: voteId,
         voterId: this.$data.user.id,
@@ -95,6 +115,7 @@ const App = {
 
       if (response.error) {
         this.showAlert("error", response.error);
+        this.setLoader(false);
         return;
       }
       this.getVotes();
@@ -104,7 +125,14 @@ const App = {
       this.$data.modals[modal] = state;
     },
     showAlert: function (type, message) {
-      console.log(type, message);
+      console.log(message);
+      this.$data.alert = {
+        type,
+        message,
+      };
+    },
+    setLoader: function (state) {
+      this.$data.loader = state;
     },
   },
   computed: {
@@ -130,6 +158,21 @@ const App = {
     }
     // get votes
     this.getVotes();
+  },
+  watch: {
+    alert: function (newValue, prevValue) {
+      if (this.$data.timeout) {
+        clearTimeout(this.$data.timeout);
+      }
+      this.$data.timeout = setTimeout(() => {
+        this.$data.alert = {
+          type: null,
+          message: "Text",
+        };
+        clearTimeout(this.$data.timeout);
+        this.$data.timeout = null;
+      }, 1500);
+    },
   },
 };
 

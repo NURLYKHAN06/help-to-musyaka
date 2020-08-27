@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Поможем Мусяке</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/index.css" />
   </head>
   <body>
     <div id="app">
-      <h2>{{$data}}</h2>
       <!-- HEADER -->
-      <header>
+      <header class="main">
         <nav v-if="user">
           <button @click="changeModal('signup', true)">Регистрация</button>
           <div>
@@ -19,36 +26,38 @@
           </div>
         </nav>
         <nav v-else>
-          <button>Регистрация</button>
+          <button @click="changeModal('signup', true)">Регистрация</button>
           <button @click="changeModal('signin', true)">Войти</button>
         </nav>
       </header>
 
       <!-- CONTENT -->
       <section class="votes-wrap">
-        <h1>Языки</h1>
         <button
+          class="add-vote-btn"
           @click="user ? changeModal('addVote', true) : showAlert('error', 'Нужна авторизация!')"
         >
-          Добавить
+          Добавить в список
         </button>
         <div class="votes">
           <div v-for="vote in computedVotes" :key="vote._id" class="vote">
-            <p class="title">{{vote.title}}</p>
-            <p class="by">Совет от <span>{{vote.author.username}}</span></p>
+            <p class="title">
+              {{vote.title}}
+              <span class="by">Совет от <span>{{vote.author.username}}</span></span>
+            </p>
 
             <button
               v-if="vote.voted"
               @click="user ? toVote(vote._id) : showAlert('error', 'Нужна авторизация!')"
             >
-              Убрать голос {{vote.voters.length}}
+              Убрать голос | {{vote.voters.length}}
             </button>
 
             <button
               v-else
               @click="user ? toVote(vote._id) : showAlert('error', 'Нужна авторизация!')"
             >
-              Проголосовать {{vote.voters.length}}
+              Проголосовать | {{vote.voters.length}}
             </button>
           </div>
         </div>
@@ -59,7 +68,7 @@
         <div class="wrapper">
           <header>
             <h3>Войти</h3>
-            <button @click="changeModal('signin', false)">close</button>
+            <button @click="changeModal('signin', false)">закрыть</button>
           </header>
           <section>
             <form @submit="signin($event)">
@@ -76,7 +85,7 @@
         <div class="wrapper">
           <header>
             <h3>Регистрация</h3>
-            <button @click="changeModal('signup', false)">close</button>
+            <button @click="changeModal('signup', false)">закрыть</button>
           </header>
           <section>
             <form @submit="signup($event)">
@@ -93,7 +102,7 @@
         <div class="wrapper">
           <header>
             <h3>Добавить</h3>
-            <button @click="changeModal('addVote', false)">close</button>
+            <button @click="changeModal('addVote', false)">закрыть</button>
           </header>
           <section>
             <form @submit="addVote($event)">
@@ -104,8 +113,27 @@
         </div>
       </div>
 
+      <!-- LOADER -->
+      <div class="loader" :class="{visible: loader}"></div>
+
+      <!-- ALERT -->
+      <div class="alert" :class="{visible: alert.type,[alert.type]: alert.type}">
+        {{alert.message}}
+      </div>
+
       <!-- FOOTER -->
-      <footer>developed by js one love</footer>
+      <footer>
+        <p>
+          Source:
+          <a target="_blank" href="https://github.com/NURLYKHAN06/help-to-musyaka"
+            >Github</a
+          >
+        </p>
+        <p>
+          developed by
+          <a target="_blank" href="https://nurlykhan06.github.io/">js one love</a>
+        </p>
+      </footer>
     </div>
     <script src="assets/vue3.js"></script>
     <script src="lib.js"></script>

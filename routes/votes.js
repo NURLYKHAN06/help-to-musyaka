@@ -55,7 +55,9 @@ router.post("/vote", checkToken, async (req, res) => {
     const voter = new Voter({ id: voterId, username: ExistVoter.username });
     await voter.validate();
 
-    const voterIndex = vote.voters.findIndex((_voter) => voter.id);
+    const voterIndex = vote.voters.findIndex(
+      (_voter) => _voter.id == voter.id.toString()
+    );
     voterIndex == -1 ? vote.voters.push(voter) : vote.voters.splice(voterIndex, 1);
 
     if (ExistVoter.votes.length == 0) {

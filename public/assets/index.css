@@ -1,5 +1,41 @@
+/* Common */
+body {
+  font-family: "Amatic SC", cursive;
+  min-width: 400px;
+}
+* {
+  margin: 0;
+}
+a {
+  color: #4781ea;
+}
+button,
+input[type="submit"] {
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-family: "Pacifico", cursive;
+  background: #c5ef20;
+  font-size: 20px;
+  cursor: pointer;
+}
+input {
+  padding: 10px 15px;
+  font-family: "Amatic SC", cursive;
+  font-size: 30px;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: #a8ca1e;
+}
+
 /* Header */
-header {
+header.main {
+  background: red;
+  margin-bottom: 25px;
+  background: rgb(230, 229, 229);
+  padding: 15px 10px;
 }
 header nav {
   display: flex;
@@ -11,18 +47,45 @@ header nav {
 header nav > div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+header nav > div h2 {
+  margin-right: 15px;
 }
 /* Votes */
+.votes-wrap {
+  padding: 10px 10px;
+}
 .votes {
 }
 .vote {
   margin: 15px 10px;
-  border: 1px solid red;
   padding: 15px;
+  box-shadow: 1px 1px #c5ef20;
+  background: rgb(230, 229, 229);
+}
+.vote button {
+  margin-top: 10px;
+}
+.vote p.title {
+  font-size: 35px;
+  word-spacing: 0cm;
+}
+.vote .by {
+  font-size: 20px;
+  margin: 10px 0;
+}
+.vote .by span {
+  font-size: 30px;
+}
+.add-vote-btn {
+  margin-left: 10px;
+  margin-bottom: -18px;
 }
 
 /* Modal */
-.modal {
+.modal,
+.loader {
   position: fixed;
   opacity: 0;
   top: -50px;
@@ -30,18 +93,42 @@ header nav > div {
   left: 0;
   right: 0;
   max-height: 0;
-  z-index: 11;
-  transition: 0.3s all ease;
-  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+  transition: 0.2s all ease;
+  background: rgba(0, 0, 0, 0.931);
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.modal .wrapper {
+  padding: 15px 20px;
+}
+.modal .wrapper header {
+  align-items: center;
+}
+.modal .wrapper header h3 {
+  font-size: 35px;
+}
+.modal .wrapper section form {
+  display: flex;
+  flex-direction: column;
+}
+.modal .wrapper section form input {
+  margin: 3px 0;
+}
+.loader {
+  background: url("../assets/loader.gif");
+}
+.loader.visible {
+  opacity: 0.3 !important;
+}
 
-.modal.visible {
+.modal.visible,
+.loader.visible {
   opacity: 1;
   top: 0;
   max-height: 100%;
+  z-index: 10;
 }
 .modal .wrapper {
   max-width: 600px;
@@ -51,4 +138,39 @@ header nav > div {
 .modal .wrapper header {
   display: flex;
   justify-content: space-between;
+}
+/* Alert */
+.alert {
+  max-width: 280px;
+  width: 100%;
+  position: fixed;
+  opacity: 0;
+  top: 10px;
+  bottom: 0;
+  height: fit-content;
+  right: -20px;
+  padding: 10px 5px;
+  padding-left: 17px;
+  background: rgb(117, 117, 117);
+  transition: 0.2s all ease;
+  box-shadow: 1px 1px 3px #8e8e8e;
+  color: white;
+  z-index: -1;
+  font-size: 30px;
+}
+.alert.visible {
+  right: 10px;
+  opacity: 1;
+  z-index: 20;
+}
+.alert.error {
+  background: #e63946;
+}
+.alert.success {
+  background: #3cd065;
+}
+/* Footer */
+footer p {
+  text-align: center;
+  font-size: 25px;
 }
