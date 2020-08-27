@@ -4,6 +4,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const routes = require("./routes/index");
 
+console.log(44);
+
 const app = express();
 const PORT = 3000;
 
