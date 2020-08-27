@@ -28,4 +28,5 @@ const VoteSchema = new Schema({
   voters: [VoterSchema],
 });
 
-module.exports = model("Vote", VoteSchema);
+module.exports.Voter = model("Voter", VoterSchema);
+module.exports.Vote = model("Vote", VoteSchema);

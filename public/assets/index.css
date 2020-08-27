@@ -1,0 +1,54 @@
+/* Header */
+header {
+}
+header nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+header nav > div {
+  display: flex;
+  justify-content: space-between;
+}
+/* Votes */
+.votes {
+}
+.vote {
+  margin: 15px 10px;
+  border: 1px solid red;
+  padding: 15px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  opacity: 0;
+  top: -50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 0;
+  z-index: 11;
+  transition: 0.3s all ease;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.visible {
+  opacity: 1;
+  top: 0;
+  max-height: 100%;
+}
+.modal .wrapper {
+  max-width: 600px;
+  width: 100%;
+  background: white;
+}
+.modal .wrapper header {
+  display: flex;
+  justify-content: space-between;
+}

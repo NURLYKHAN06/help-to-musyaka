@@ -18,7 +18,6 @@ router.post("/signup", async (req, res) => {
 
     res.json({
       message: "Success.",
-      data: user,
     });
   } catch (error) {
     res.json({
@@ -27,6 +26,7 @@ router.post("/signup", async (req, res) => {
     });
   }
 });
+
 router.post("/signin", async (req, res) => {
   const { username, password } = req.body;
 
@@ -47,6 +47,7 @@ router.post("/signin", async (req, res) => {
     res.json({
       data: {
         token: jwt.sign(data, signature, { expiresIn: expiration }),
+        userId: user._id,
       },
     });
   } catch (error) {

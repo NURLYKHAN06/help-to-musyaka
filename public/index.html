@@ -4,9 +4,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Поможем Мусяке</title>
+    <link rel="stylesheet" href="assets/index.css" />
   </head>
   <body>
-    <h1>Хээлп</h1>
-    <script src="main.js"></script>
+    <div id="app">
+      <h2>{{$data}}</h2>
+      <!-- HEADER -->
+      <header>
+        <nav v-if="user">
+          <button @click="changeModal('signup', true)">Регистрация</button>
+          <div>
+            <h2>{{user.username}}</h2>
+            <button @click="signout">Выйти</button>
+          </div>
+        </nav>
+        <nav v-else>
+          <button>Регистрация</button>
+          <button @click="changeModal('signin', true)">Войти</button>
+        </nav>
+      </header>
+
+      <!-- CONTENT -->
+      <section class="votes-wrap">
+        <h1>Языки</h1>
+        <button
+          @click="user ? changeModal('addVote', true) : showAlert('error', 'Нужна авторизация!')"
+        >
+          Добавить
+        </button>
+        <div class="votes">
+          <div v-for="vote in computedVotes" :key="vote._id" class="vote">
+            <p class="title">{{vote.title}}</p>
+            <p class="by">Совет от <span>{{vote.author.username}}</span></p>
+
+            <button
+              v-if="vote.voted"
+              @click="user ? toVote(vote._id) : showAlert('error', 'Нужна авторизация!')"
+            >
+              Убрать голос {{vote.voters.length}}
+            </button>
+
+            <button
+              v-else
+              @click="user ? toVote(vote._id) : showAlert('error', 'Нужна авторизация!')"
+            >
+              Проголосовать {{vote.voters.length}}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL -->
+      <div class="modal signin" :class="{visible: modals.signin}">
+        <div class="wrapper">
+          <header>
+            <h3>Войти</h3>
+            <button @click="changeModal('signin', false)">close</button>
+          </header>
+          <section>
+            <form @submit="signin($event)">
+              <input type="text" v-model="inputValues.username" />
+              <input type="password" v-model="inputValues.password" />
+
+              <input type="submit" />
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <div class="modal signup" :class="{visible: modals.signup}">
+        <div class="wrapper">
+          <header>
+            <h3>Регистрация</h3>
+            <button @click="changeModal('signup', false)">close</button>
+          </header>
+          <section>
+            <form @submit="signup($event)">
+              <input type="text" v-model="inputValues.username" />
+              <input type="password" v-model="inputValues.password" />
+
+              <input type="submit" />
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <div class="modal add-vote" :class="{visible: modals.addVote}">
+        <div class="wrapper">
+          <header>
+            <h3>Добавить</h3>
+            <button @click="changeModal('addVote', false)">close</button>
+          </header>
+          <section>
+            <form @submit="addVote($event)">
+              <input type="text" v-model="inputValues.voteTitle" />
+              <input type="submit" />
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>developed by js one love</footer>
+    </div>
+    <script src="assets/vue3.js"></script>
+    <script src="lib.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
