@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const routes = require("./routes/index");
 
 const app = express();
-const PORT = 3000;
 
 app.use(express.static("public"));
 app.use(express.json({ extended: false }));
@@ -24,8 +23,8 @@ async function start() {
       useCreateIndex: true,
     });
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
     });
   } catch (error) {
     console.log("Server error", error);
