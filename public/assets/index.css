@@ -174,3 +174,12 @@ footer p {
   text-align: center;
   font-size: 25px;
 }
+/* Intro */
+.intro {
+  text-align: center;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+.intro h1 {
+  padding: 15px 10px;
+}
